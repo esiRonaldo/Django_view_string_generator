@@ -1,0 +1,45 @@
+default_css_vars_dic = {"main_color":"#fff", "btn-bg-color":"black"}
+
+Component_Dict= {"main_color" :['component_SliderTabs_slider_background:', 'component_SliderTabs_inner_color:', 'component_ProductList_itemPrice_color:', 'modal_selectSize_actionName_color:',
+                'modal_selectSize_confirmBtn_color:', 'modal_selectSize_actionHeadline_color:', 'modal_selectSize_actionSubline_color:', 'modal_selectSize_actionPrice_color:'],
+                "btn-bg-color":['page_home_actionBg_background:', 'component_counterWidget_inner_background-color:', 'component_ingredientSelector_ingrGroupHeader_background-color:', 'component_ingredientSelector_ingrGroupHeader_active_background-color:',
+                'component_Order_headerButton_font-color:', 'component_Order_offerText_font-size:', 'component_countBlock_countAction_background-color:', 'component_confirm_confirmBtn_background:', 'component_IngredientGroupDisplay_inner_color:']}
+
+# endTest
+def toString():
+    main_css_variables_string = ":root {\r\n  "
+    for ColorDef in Component_Dict:
+        CompNameList = Component_Dict.get(ColorDef)
+        color_value = default_css_vars_dic.get(ColorDef)
+        for CompName in CompNameList:
+            main_css_variables_string += "--" + CompName + color_value+  ";" + "\r\n  "
+    print(main_css_variables_string)
+
+
+toString()
+
+class CssThemeAdmin(admin.ModelAdmin):
+    model = CssTheme
+
+    queryset=CssTheme.objects.all()
+
+    #change_form_template = 'admin/orderkiosk/csstheme/change_form.html'
+
+    # @register.filter(name='split')
+    # def split(varsString):
+    #     """
+    #         Returns the value turned into a list.
+    #     """
+    #     formElements = []
+    #     if varsString:
+    #         vars = varsString.split("--")
+    #         for line in vars:
+    #             line = line.replace(r";\r\n","")
+    #             m = re.search("^(.*):(.*)",line)
+    #             line.split("@")
+    #             if m:
+    #                 formElements.append((m.group(1),m.group(2)))
+    #
+    #     # else:
+    #     #     formElements = [("main_color", "#fff"), ("main_font", "\"\""), ("defaultColor", "#252525"),("page_home_color", "#000")]
+    #     return formElements
