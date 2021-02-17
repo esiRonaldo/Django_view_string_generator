@@ -43,3 +43,66 @@ class CssThemeAdmin(admin.ModelAdmin):
     #     # else:
     #     #     formElements = [("main_color", "#fff"), ("main_font", "\"\""), ("defaultColor", "#252525"),("page_home_color", "#000")]
     #     return formElements
+
+
+
+----------------------------------------------------------template --------------------------------------------------------
+{% extends "admin/change_form.html" %}
+{% block after_field_sets %}{{ block.super }}
+Print my model here {{  }}
+Print foreignkey related records of my model:
+{% for item in original.items_set.all %} {{ item }} {% endfor %}
+{% endblock %}
+
+
+
+
+{% extends "admin/change_form.html" %}
+   {{ form.as_p }}
+
+{% block after_field_sets %}
+
+    <form action="{% if edit %}{% url 'edit-form' edit  %}{% else %}{% url 'create-form' %}{% endif %}" method="POST">
+
+     <table>
+    <tr>
+        <th>CSS Variable</th>
+        <th>Content</th>
+    </tr>
+    {% for item,v in original.template.items %}
+        <tr>
+            <th><label for="{{ item }}">{{ item }}:</label></th>
+            <th><input id="{{ item }}" type="text" name="" value="{{ v }}"></th>
+        </tr>
+    {% endfor %}
+    </table>
+           <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+           <input type="reset" name="cancel" class="btn-default" value="Cancel">
+
+    </form>
+
+{% endblock %}
+
+
+{% extends "admin/change_form.html" %}
+   {{ form.as_p }}
+
+{% block after_field_sets %}
+    <table>
+    <tr>
+        <th>CSS Variable</th>
+        <th>Content</th>
+    </tr>
+    {% for item in original.css_vars|split %}
+        <tr>
+            <th><label for="{{ item.0 }}">{{ item.0 }}:</label></th>
+            <th><input id="{{ item.0 }}" type="text" name="" value="{{ item.1 }}"></th>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
+
+
+
+
+
